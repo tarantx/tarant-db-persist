@@ -6,7 +6,7 @@ describe('actor-model', () => {
             {
                 "attributes": {
                     "id": { "type": "string", "required": true },
-                    "type": { "type": "string" }
+                    "type": { "type": "string", "required": true }
                 },
                 "datastore": "default",
                 "identity": "actor",

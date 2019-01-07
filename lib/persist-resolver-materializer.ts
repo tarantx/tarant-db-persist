@@ -19,28 +19,36 @@ export default class PersistResolverMaterializer implements IMaterializer, IReso
       })
     })
   }
+
   private actorModel: any
   private types: any
+  
   protected constructor(actorModel: any, types: any) {
     this.actorModel = actorModel
     this.types = types
   }
+
   public async onInitialize(actor: Actor): Promise<void> {
-    await this.createOrUpdate(actor)
+    const record = await (actor as any).toJson()
+    await this.actorModel.findOrCreate({ id: record.id }, record)
   }
+
   public onBeforeMessage(actor: Actor, message: ActorMessage): void {
     //
   }
+
   public async onAfterMessage(actor: Actor, message: ActorMessage): Promise<void> {
-    await this.createOrUpdate(actor)
+    const record = await (actor as any).toJson()    
+    await this.actorModel.destroyOne({ id: record.id })
+    await this.actorModel.create(record)
   }
+
   public onError(actor: Actor, message: ActorMessage, error: any): void {
     //
   }
+
   public async resolveActorById(id: string): Promise<IActor> {
-    // console.log("id to search: " + id)
     const result = await this.actorModel.findOne({ id })
-    // console.log("found: " + result)
     if (!result) {
       return Promise.reject('not found')
     }
@@ -48,14 +56,5 @@ export default class PersistResolverMaterializer implements IMaterializer, IReso
     actor.updateFrom(result)
     return Promise.resolve(actor)
   }
-  private async createOrUpdate(actor: Actor) {
-    const record = await (actor as any).toJson()
-    // console.log("from json: " + record.id)
-    if (await this.actorModel.findOne({ id: record.id })) {
-      await this.actorModel.updateOne({ id: record.id }).set(record)
-    }
-    else {
-      await this.actorModel.create(record)
-    }
-  }
+
 }
