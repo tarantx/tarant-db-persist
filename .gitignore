@@ -59,3 +59,12 @@ typings/
 
 # next.js build output
 .next
+dist
+/cdn
+
+#Project settings
+.idea
+.vscode
+dist
+coverage
+.rpt2_cache/

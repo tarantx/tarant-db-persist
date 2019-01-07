@@ -1,0 +1,10 @@
+{
+    "attributes": {
+        "id": { "type": "string", "required": true },
+        "type": { "type": "string" }
+    },
+    "datastore": "default",
+    "identity": "actor",
+    "primaryKey": "id",
+    "schema": false
+}
