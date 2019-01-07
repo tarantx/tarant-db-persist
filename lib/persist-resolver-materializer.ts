@@ -12,8 +12,7 @@ export default class PersistResolverMaterializer implements IMaterializer, IReso
       waterline.initialize(config, (err: any, ontology: any) => {
         if (err) {
           rejects(err)
-        }
-        else {
+        } else {
           resolve(new PersistResolverMaterializer(ontology.collections.actor, types))
         }
       })
@@ -22,7 +21,7 @@ export default class PersistResolverMaterializer implements IMaterializer, IReso
 
   private actorModel: any
   private types: any
-  
+
   protected constructor(actorModel: any, types: any) {
     this.actorModel = actorModel
     this.types = types
@@ -38,7 +37,7 @@ export default class PersistResolverMaterializer implements IMaterializer, IReso
   }
 
   public async onAfterMessage(actor: Actor, message: ActorMessage): Promise<void> {
-    const record = await (actor as any).toJson()    
+    const record = await (actor as any).toJson()
     await this.actorModel.destroyOne({ id: record.id })
     await this.actorModel.create(record)
   }
@@ -56,5 +55,4 @@ export default class PersistResolverMaterializer implements IMaterializer, IReso
     actor.updateFrom(result)
     return Promise.resolve(actor)
   }
-
 }
