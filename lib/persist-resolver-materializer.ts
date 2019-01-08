@@ -38,7 +38,7 @@ export default class PersistResolverMaterializer implements IMaterializer, IReso
 
   public async onAfterMessage(actor: Actor, message: ActorMessage): Promise<void> {
     let record = await (actor as any).toJson()
-    let dbRecord = await this.actorModel.findOne({ id: record.id })
+    const dbRecord = await this.actorModel.findOne({ id: record.id })
     record = Object.keys(dbRecord).reduce((acc, key) => {
       return { ...acc, [key]: record[key] || null }
     }, {})
