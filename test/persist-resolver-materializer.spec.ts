@@ -90,7 +90,7 @@ describe('tarant db', () => {
         const actor = await persistor.resolveActorById(id)
         fail()
       } catch (error) {
-        expect(error).toEqual("actor not found")
+        expect(error).toEqual('actor not found')
       }
     })
   })
