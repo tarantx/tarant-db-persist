@@ -64,14 +64,34 @@ describe('tarant db', () => {
   })
 
   describe('onAfterMessage', () => {
-    it('should not create if already exist', async () => {
+    it('should not create if already exist setting undefined as null', async () => {
       const id = faker.random.uuid()
       const actorMessage = jest.fn<ActorMessage>()()
       const actorParam = new FakeActor(id) as any
       await actorModel.create({ id, type: 'FakeActor', some: faker.random.uuid() })
       await persistor.onAfterMessage(actorParam, actorMessage)
       const actor = await actorModel.findOne({ id })
-      expect(actor).toEqual({ id, type: 'FakeActor' })
+      expect(actor).toEqual({ id, type: 'FakeActor', some: null })
+    })
+  })
+
+  describe('resolveActorById', () => {
+    it('retrieve actor if exists in db', async () => {
+      const id = faker.random.uuid()
+      await actorModel.create({ id, type: 'FakeActor', some: id })
+      const actor = await persistor.resolveActorById(id)
+      expect(actor).toBeInstanceOf(FakeActor)
+      expect((actor as any).toJson()).toEqual({ id, type: 'FakeActor' })
+    })
+
+    it('should fail if not db', async () => {
+      const id = faker.random.uuid()
+      try {
+        const actor = await persistor.resolveActorById(id)
+        fail()
+      } catch (error) {
+        expect(error).toEqual("actor not found")
+      }
     })
   })
 })

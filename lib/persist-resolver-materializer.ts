@@ -37,9 +37,12 @@ export default class PersistResolverMaterializer implements IMaterializer, IReso
   }
 
   public async onAfterMessage(actor: Actor, message: ActorMessage): Promise<void> {
-    const record = await (actor as any).toJson()
-    await this.actorModel.destroyOne({ id: record.id })
-    await this.actorModel.create(record)
+    let record = await (actor as any).toJson()
+    let dbRecord = await this.actorModel.findOne({ id: record.id })
+    record = Object.keys(dbRecord).reduce((acc, key) => {
+      return {...acc, [key]: record[key] || null }
+    },{})
+    await this.actorModel.updateOne({ id: record.id }).set(record)
   }
 
   public onError(actor: Actor, message: ActorMessage, error: any): void {
@@ -49,7 +52,7 @@ export default class PersistResolverMaterializer implements IMaterializer, IReso
   public async resolveActorById(id: string): Promise<IActor> {
     const result = await this.actorModel.findOne({ id })
     if (!result) {
-      return Promise.reject('not found')
+      return Promise.reject('actor not found')
     }
     const actor = new this.types[result.type](id)
     actor.updateFrom(result)
