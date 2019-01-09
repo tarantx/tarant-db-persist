@@ -21,7 +21,7 @@ add it to your project using `npm install tarant-db-persist --save` or `yarn add
 
 ## Usage
 
-Initialize the sync client with the 
+Initialize the sync client with the waterline adapter from the persist storage you will be interested on
 
 ```js
 import { ActorSystem, ActorSystemConfigurationBuilder } from 'tarant';
