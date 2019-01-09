@@ -17,29 +17,21 @@ class FakeActor {
   }
 }
 
-const dbConfig = {
-  adapters: {
-    disk: disk,
-  },
-  datastores: {
-    default: {
-      adapter: 'disk',
-      inMemoryOnly: true,
-    },
-  },
-}
-
 describe('tarant db', () => {
   let persistor: PersistResolverMaterializer
   let actorModel: any
 
   beforeEach(async () => {
-    persistor = await PersistResolverMaterializer.create(dbConfig, { FakeActor })
+    const config = {
+      adapter: disk,
+      actorTypes: { FakeActor },
+    }
+    persistor = await PersistResolverMaterializer.create(config)
     actorModel = (persistor as any).actorModel
   })
 
   afterEach(async () => {
-    await new Promise((resolve, _) => dbConfig.adapters.disk.teardown(null, resolve))
+    await new Promise((resolve, _) => disk.teardown(null, resolve))
   })
 
   describe('onInitialize', () => {

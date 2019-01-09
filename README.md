@@ -29,19 +29,12 @@ import * as diskAdapter from 'sails-disk';
 import { PersistResolverMaterializer } from 'tarant-db-persist';
 import AppActor from '../AppActor';
 
-const dbConfig = {
-    adapters: {
-      'disk': diskAdapter
-    },
-    datastores: {
-        default: {
-          adapter: 'disk'
-        }
-    }
+const config = {
+    adapter: diskAdapter,
+    actorTypes: { AppActor }
   };
 
-const persister = await PersistMaterializer.create(dbConfig, { AppActor })
-
+const persister = await PersistMaterializer.create(config)
 
 const system : any = ActorSystem.for(ActorSystemConfigurationBuilder.define()
     .withMaterializers([persister])
