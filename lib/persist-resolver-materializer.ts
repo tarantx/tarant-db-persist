@@ -1,7 +1,7 @@
 import { Actor, ActorMessage, IMaterializer, IResolver } from 'tarant'
 import { IActor } from 'tarant/dist/actor-system/actor'
 import Waterline from 'waterline'
-import actorConfig from '../lib/actor-model.json'
+import actorConfig from './actor-model.json'
 
 export default class PersistResolverMaterializer implements IMaterializer, IResolver {
   public static create(config: any): Promise<PersistResolverMaterializer> {
