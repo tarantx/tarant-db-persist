@@ -23,7 +23,12 @@ describe('tarant db', () => {
 
   beforeEach(async () => {
     const config = {
-      adapter: disk,
+      adapter: { 
+        type : disk,
+        settings: {
+            inMemoryOnly: true
+        }
+    },
       actorTypes: { FakeActor },
     }
     persistor = await PersistResolverMaterializer.create(config)
@@ -79,7 +84,7 @@ describe('tarant db', () => {
     it('should fail if not db', async () => {
       const id = faker.random.uuid()
       try {
-        const actor = await persistor.resolveActorById(id)
+        await persistor.resolveActorById(id)
         fail()
       } catch (error) {
         expect(error).toEqual('actor not found')

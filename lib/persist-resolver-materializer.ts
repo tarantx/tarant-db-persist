@@ -10,15 +10,15 @@ export default class PersistResolverMaterializer implements IMaterializer, IReso
       const waterline = new Waterline()
       const dbConfig = {
         adapters: {
-          adapt: config.adapter,
+          adapt: config.adapter.type,
         },
         datastores: {
           default: {
             adapter: 'adapt',
-            inMemoryOnly: true,
           },
         },
       }
+      dbConfig.datastores.default = { ...dbConfig.datastores.default, ...config.adapter.settings }
       waterline.registerModel(actorModel)
       waterline.initialize(dbConfig, (err: any, ontology: any) => {
         if (err) {
