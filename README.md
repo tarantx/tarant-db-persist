@@ -30,8 +30,13 @@ import { PersistResolverMaterializer } from 'tarant-db-persist';
 import AppActor from '../AppActor';
 
 const config = {
-    adapter: diskAdapter,
-    actorTypes: { AppActor }
+    adapter: {
+        type: diskAdapter,
+        settings: {
+          inMemoryOnly: true
+        },
+      },
+      actorTypes: { AppActor }
   };
 
 const persister = await PersistMaterializer.create(config)

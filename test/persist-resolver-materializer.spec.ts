@@ -23,12 +23,12 @@ describe('tarant db', () => {
 
   beforeEach(async () => {
     const config = {
-      adapter: { 
-        type : disk,
+      adapter: {
+        type: disk,
         settings: {
-            inMemoryOnly: true
-        }
-    },
+          inMemoryOnly: true,
+        },
+      },
       actorTypes: { FakeActor },
     }
     persistor = await PersistResolverMaterializer.create(config)
