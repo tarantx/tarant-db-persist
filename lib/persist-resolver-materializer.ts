@@ -1,35 +1,31 @@
 import { Actor, ActorMessage, IMaterializer, IResolver } from 'tarant'
 import { IActor } from 'tarant/dist/actor-system/actor'
 import Waterline from 'waterline'
-import actorConfig from './actor-model.json'
 
-export default class PersistResolverMaterializer implements IMaterializer, IResolver {
-  public static create(config: any): Promise<PersistResolverMaterializer> {
+export default class PersistMaterializer implements IMaterializer, IResolver {
+  public static create(config: any, types: any): Promise<PersistMaterializer> {
     return new Promise((resolve, rejects) => {
-      const actorModel = Waterline.Collection.extend(actorConfig)
+      const actorModel = Waterline.Collection.extend({
+        attributes: {
+          id: { type: 'string', required: true },
+          type: { type: 'string' },
+        },
+        datastore: 'default',
+        identity: 'actor',
+        primaryKey: 'id',
+        schema: false,
+      })
       const waterline = new Waterline()
-      const dbConfig = {
-        adapters: {
-          adapt: config.adapter.type,
-        },
-        datastores: {
-          default: {
-            adapter: 'adapt',
-          },
-        },
-      }
-      dbConfig.datastores.default = { ...dbConfig.datastores.default, ...config.adapter.settings }
       waterline.registerModel(actorModel)
-      waterline.initialize(dbConfig, (err: any, ontology: any) => {
+      waterline.initialize(config, (err: any, ontology: any) => {
         if (err) {
           rejects(err)
         } else {
-          resolve(new PersistResolverMaterializer(ontology.collections.actor, config.actorTypes))
+          resolve(new PersistMaterializer(ontology.collections.actor, types))
         }
       })
     })
   }
-
   private actorModel: any
   private types: any
 
@@ -39,23 +35,14 @@ export default class PersistResolverMaterializer implements IMaterializer, IReso
   }
 
   public async onInitialize(actor: Actor): Promise<void> {
-    const record = await (actor as any).toJson()
-    await this.actorModel.findOrCreate({ id: record.id }, record)
+    await this.createOrUpdate(actor)
   }
-
   public onBeforeMessage(actor: Actor, message: ActorMessage): void {
     //
   }
-
   public async onAfterMessage(actor: Actor, message: ActorMessage): Promise<void> {
-    let record = await (actor as any).toJson()
-    const dbRecord = await this.actorModel.findOne({ id: record.id })
-    record = Object.keys(dbRecord).reduce((acc, key) => {
-      return { ...acc, [key]: record[key] || null }
-    }, {})
-    await this.actorModel.updateOne({ id: record.id }).set(record)
+    await this.createOrUpdate(actor)
   }
-
   public onError(actor: Actor, message: ActorMessage, error: any): void {
     //
   }
@@ -63,10 +50,20 @@ export default class PersistResolverMaterializer implements IMaterializer, IReso
   public async resolveActorById(id: string): Promise<IActor> {
     const result = await this.actorModel.findOne({ id })
     if (!result) {
-      return Promise.reject('actor not found')
+      return Promise.reject('Actor not found')
     }
     const actor = new this.types[result.type](id)
     actor.updateFrom(result)
     return Promise.resolve(actor)
+  }
+
+  private async createOrUpdate(actor: Actor) {
+    const record = await (actor as any).toJson()
+
+    if (await this.actorModel.findOne({ id: record.id })) {
+      await this.actorModel.updateOne({ id: record.id }).set(record)
+    } else {
+      await this.actorModel.create(record)
+    }
   }
 }

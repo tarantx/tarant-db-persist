@@ -5,13 +5,14 @@ import { ActorMessage } from 'tarant'
 
 class FakeActor {
   public readonly id: string
+  public some: string | undefined
   constructor(id: string) {
     this.id = id
   }
   public toJson() {
-    return { id: this.id, type: 'FakeActor' }
-    //
+    return { id: this.id, type: 'FakeActor', some: this.some }
   }
+
   public updateFrom() {
     //
   }
@@ -22,16 +23,18 @@ describe('tarant db', () => {
   let actorModel: any
 
   beforeEach(async () => {
-    const config = {
-      adapter: {
-        type: disk,
-        settings: {
+    var config = {
+      adapters: {
+        disk: disk,
+      },
+      datastores: {
+        default: {
+          adapter: 'disk',
           inMemoryOnly: true,
         },
       },
-      actorTypes: { FakeActor },
     }
-    persistor = await PersistResolverMaterializer.create(config)
+    persistor = await PersistResolverMaterializer.create(config, { FakeActor })
     actorModel = (persistor as any).actorModel
   })
 
@@ -61,14 +64,15 @@ describe('tarant db', () => {
   })
 
   describe('onAfterMessage', () => {
-    it('should not create if already exist setting undefined as null', async () => {
+    it('should not create and update if already exist setting undefined as null', async () => {
       const id = faker.random.uuid()
-      const actorMessage = jest.fn<ActorMessage>()()
+      const actorMessage = jest.fn<ActorMessage, []>()()
       const actorParam = new FakeActor(id) as any
+      actorParam.some = faker.random.uuid()
       await actorModel.create({ id, type: 'FakeActor', some: faker.random.uuid() })
       await persistor.onAfterMessage(actorParam, actorMessage)
       const actor = await actorModel.findOne({ id })
-      expect(actor).toEqual({ id, type: 'FakeActor', some: null })
+      expect(actor).toEqual({ id, type: 'FakeActor', some: actorParam.some })
     })
   })
 
@@ -87,7 +91,7 @@ describe('tarant db', () => {
         await persistor.resolveActorById(id)
         fail()
       } catch (error) {
-        expect(error).toEqual('actor not found')
+        expect(error).toEqual('Actor not found')
       }
     })
   })
