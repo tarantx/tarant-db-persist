@@ -8,7 +8,7 @@
     "Kevin Mas Ruiz <masruizkevin@gmail.com>",
     "Kanekotic <alvarojosepl@gmail.com>"
   ],
-  "repository": "git@github.com:tarantx/tarant-sync-client.git",
+  "repository": "git@github.com:tarantx/tarant-db-persist.git",
   "license": "MIT",
   "keywords": [
     "actor system",
@@ -16,7 +16,8 @@
     "DDD",
     "actor-system",
     "persist",
-    "server"
+    "server",
+    "tarant"
   ],
   "scripts": {
     "prepare": "yarn build && yarn build:cdn",
