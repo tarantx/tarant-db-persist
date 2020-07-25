@@ -37,13 +37,13 @@
   },
   "devDependencies": {
     "@types/faker": "4.1.12",
-    "@types/jest": "26.0.5",
-    "@types/node": "14.0.23",
+    "@types/jest": "26.0.7",
+    "@types/node": "14.0.26",
     "coveralls": "3.1.0",
     "faker": "4.1.0",
     "jest": "26.1.0",
     "prettier": "2.0.5",
-    "rollup": "2.22.0",
+    "rollup": "2.23.0",
     "rollup-plugin-commonjs": "10.1.0",
     "rollup-plugin-json": "4.0.0",
     "rollup-plugin-node-builtins": "2.1.2",
@@ -59,7 +59,7 @@
     "typescript": "3.9.7"
   },
   "dependencies": {
-    "tarant": "2.7.34",
+    "tarant": "2.7.35",
     "waterline": "0.13.6"
   },
   "jest": {
