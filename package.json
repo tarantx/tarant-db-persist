@@ -36,14 +36,14 @@
     "preversion": "yarn test"
   },
   "devDependencies": {
-    "@types/faker": "4.1.12",
+    "@types/faker": "5.1.0",
     "@types/jest": "26.0.13",
-    "@types/node": "14.6.4",
+    "@types/node": "14.10.1",
     "coveralls": "3.1.0",
     "faker": "5.1.0",
     "jest": "26.4.2",
     "prettier": "2.1.1",
-    "rollup": "2.26.10",
+    "rollup": "2.26.11",
     "rollup-plugin-commonjs": "10.1.0",
     "rollup-plugin-json": "4.0.0",
     "rollup-plugin-node-builtins": "2.1.2",
@@ -59,7 +59,7 @@
     "typescript": "4.0.2"
   },
   "dependencies": {
-    "tarant": "2.7.41",
+    "tarant": "2.7.42",
     "waterline": "0.13.6"
   },
   "jest": {
