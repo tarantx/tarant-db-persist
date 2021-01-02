@@ -1,6 +1,6 @@
 {
   "name": "tarant-db-persist",
-  "version": "0.3.56",
+  "version": "0.3.57",
   "description": "",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
