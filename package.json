@@ -36,14 +36,14 @@
     "preversion": "yarn test"
   },
   "devDependencies": {
-    "@types/faker": "5.1.5",
+    "@types/faker": "5.1.6",
     "@types/jest": "26.0.20",
     "@types/node": "14.14.22",
     "coveralls": "3.1.0",
-    "faker": "5.1.0",
+    "faker": "5.2.0",
     "jest": "26.6.3",
     "prettier": "2.2.1",
-    "rollup": "2.38.0",
+    "rollup": "2.38.1",
     "rollup-plugin-commonjs": "10.1.0",
     "rollup-plugin-json": "4.0.0",
     "rollup-plugin-node-builtins": "2.1.2",
@@ -52,14 +52,14 @@
     "rollup-plugin-terser": "7.0.2",
     "rollup-plugin-typescript2": "0.29.0",
     "sails-disk": "2.1.0",
-    "ts-jest": "26.4.4",
+    "ts-jest": "26.5.0",
     "tslib": "2.1.0",
     "tslint": "6.1.3",
     "tslint-config-prettier": "1.18.0",
     "typescript": "4.1.3"
   },
   "dependencies": {
-    "tarant": "2.7.61",
+    "tarant": "2.7.62",
     "waterline": "0.13.6"
   },
   "jest": {
