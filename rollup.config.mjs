@@ -8,7 +8,7 @@ import builtins from "rollup-plugin-node-builtins"
 export default {
     output: {
         format: "umd",
-        file: "cdn/tarant-sync-client-" + require("./package.json").version + ".min.js",
+        file: "cdn/tarant-sync-client-" + (await import("./package.json")).version + ".min.js",
         name: "tarantRemoteSync"
     },
     input: "lib/index.ts",
