@@ -4,7 +4,7 @@ import nodeResolve from 'rollup-plugin-node-resolve'
 import typescript from 'rollup-plugin-typescript2'
 import json from "rollup-plugin-json"
 import builtins from "rollup-plugin-node-builtins"
-import * as package from "./package.json"
+import package from "./package.json"
 
 export default {
     output: {
