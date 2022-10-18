@@ -4,12 +4,14 @@ import nodeResolve from 'rollup-plugin-node-resolve'
 import typescript from 'rollup-plugin-typescript2'
 import json from "rollup-plugin-json"
 import builtins from "rollup-plugin-node-builtins"
-import package from "./package.json"
+import { createRequire } from 'module';
+
+const require = createRequire(import.meta.url);
 
 export default {
     output: {
         format: "umd",
-        file: "cdn/tarant-sync-client-" + package.version + ".min.js",
+        file: "cdn/tarant-sync-client-" + require("./package.json").version + ".min.js",
         name: "tarantRemoteSync"
     },
     input: "lib/index.ts",
