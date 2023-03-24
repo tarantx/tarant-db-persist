@@ -1,5 +1,6 @@
 import { Actor, ActorMessage, IMaterializer, IResolver } from 'tarant'
 import { IActor } from 'tarant/dist/actor-system/actor'
+import equal from 'fast-deep-equal'
 import Waterline from 'waterline'
 
 export default class PersistMaterializer implements IMaterializer, IResolver {
@@ -59,9 +60,10 @@ export default class PersistMaterializer implements IMaterializer, IResolver {
 
   private async createOrUpdate(actor: Actor) {
     const record = await (actor as any).toJson()
-
-    if (await this.actorModel.findOne({ id: record.id })) {
-      await this.actorModel.updateOne({ id: record.id }).set(record)
+    const dbRecord = await this.actorModel.findOne({ id: record.id })
+    if (equal(record, dbRecord)) return
+    if (dbRecord) {
+      await this.actorModel.updateOne({ id: record.id }).set({ ...record, id: undefined })
     } else {
       await this.actorModel.create(record)
     }
