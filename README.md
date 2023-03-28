@@ -1,15 +1,19 @@
-# ![logomakr_8lsyys](https://user-images.githubusercontent.com/3071208/50820118-329ab800-132c-11e9-98d9-eac3805765ae.png)
+# ![tarant-db](https://user-images.githubusercontent.com/3071208/228353122-6010aa3a-8bf2-43ed-9399-99d04d1fcd06.png)
 
 
+![Downloads](https://img.shields.io/npm/dt/tarant-db-persist.svg)
 [![npm](https://img.shields.io/npm/v/tarant-db-persist.svg)](https://www.npmjs.com/package/tarant-db-persist)
-[![Build Status](https://travis-ci.org/tarantx/tarant-db-persist.svg?branch=master)](https://travis-ci.org/tarantx/tarant-db-persist)
-[![Coverage Status](https://coveralls.io/repos/github/tarantx/tarant-db-persist/badge.svg?branch=master)](https://coveralls.io/github/tarantx/tarant-db-persist?branch=master)
+![npm](https://img.shields.io/npm/l/tarant-db-persist.svg)
+![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/tarantx/tarant-db-persist/build.yml?branch=main)
+[![All Contributors](https://img.shields.io/badge/all_contributors-0-orange.svg?style=flat-square)](#contributors-)
+[![Maintainability](https://api.codeclimate.com/v1/badges/4cdaae6d6f61ee0999ab/maintainability)](https://codeclimate.com/github/tarantx/tarant-db-persist/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/4cdaae6d6f61ee0999ab/test_coverage)](https://codeclimate.com/github/tarantx/tarant-db-persist/test_coverage)
 ![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)
 ![issues Welcome](https://img.shields.io/badge/issues-welcome-brightgreen.svg)
-![npm](https://img.shields.io/npm/l/tarant-db-persist.svg)
 ![GitHub issues](https://img.shields.io/github/issues/tarantx/tarant-db-persist.svg)
 ![GitHub pull requests](https://img.shields.io/github/issues-pr/tarantx/tarant-db-persist.svg)
-![Downloads](https://img.shields.io/npm/dt/tarant-db-persist.svg)
+
+
 
 ## Motivation
 
