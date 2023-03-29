@@ -3,8 +3,8 @@ import { IActor } from 'tarant/dist/actor-system/actor'
 import equal from 'fast-deep-equal'
 import Waterline from 'waterline'
 
-export default class PersistMaterializer implements IMaterializer, IResolver {
-  public static create(config: any, types: any): Promise<PersistMaterializer> {
+export class PersistResolverMaterializer implements IMaterializer, IResolver {
+  public static create(config: any, types: any): Promise<PersistResolverMaterializer> {
     return new Promise((resolve, rejects) => {
       const actorModel = Waterline.Collection.extend({
         attributes: {
@@ -22,7 +22,7 @@ export default class PersistMaterializer implements IMaterializer, IResolver {
         if (err) {
           rejects(err)
         } else {
-          resolve(new PersistMaterializer(ontology.collections.actor, types))
+          resolve(new PersistResolverMaterializer(ontology.collections.actor, types))
         }
       })
     })

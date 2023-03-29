@@ -1,6 +1,6 @@
 import { faker } from '@faker-js/faker'
 import * as disk from 'sails-disk'
-import PersistResolverMaterializer from '../lib/persist-resolver-materializer'
+import { PersistResolverMaterializer } from '../lib/persist-resolver-materializer'
 import { ActorMessage } from 'tarant'
 
 class FakeActor {
@@ -23,7 +23,7 @@ describe('tarant db', () => {
   let actorModel: any
 
   beforeEach(async () => {
-    var config = {
+    const config = {
       adapters: {
         disk: disk,
       },
